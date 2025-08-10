@@ -1,0 +1,16 @@
+{
+    "metrics": {
+        "documentProcessing": {
+            "target": "< 1000ms",
+            "critical": "> 5000ms"
+        },
+        "aiAnalysis": {
+            "target": "< 2000ms",
+            "critical": "> 10000ms"
+        },
+        "extensionActivation": {
+            "target": "< 500ms",
+            "critical": "> 2000ms"
+        }
+    }
+}

@@ -1,0 +1,86 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.formatOnSave": true,
+		"editor.codeActionsOnSave": {
+			"source.fixAll.eslint": true
+		},
+		"typescript.tsdk": "node_modules/typescript/lib",
+		"files.exclude": {
+			"**/.git": true,
+			"**/.DS_Store": true,
+			"**/node_modules": true,
+			"**/dist": true
+		},
+		"search.exclude": {
+			"**/node_modules": true,
+			"**/dist": true
+		},
+		"nsipLegal.templateDirectory": "${workspaceFolder}/templates",
+		"nsipLegal.enableAutoValidation": true,
+		"nsipLegal.defaultJurisdictions": ["US", "EU"],
+		"nsipLegal.showDefinitionsInline": true,
+		"nsipLegal.encryptionAlgorithm": "aes-256-gcm"
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Extension",
+				"type": "extensionHost",
+				"request": "launch",
+				"args": [
+					"--extensionDevelopmentPath=${workspaceFolder}"
+				],
+				"outFiles": [
+					"${workspaceFolder}/dist/**/*.js"
+				],
+				"preLaunchTask": "npm: watch"
+			},
+			{
+				"name": "Extension Tests",
+				"type": "extensionHost",
+				"request": "launch",
+				"args": [
+					"--extensionDevelopmentPath=${workspaceFolder}",
+					"--extensionTestsPath=${workspaceFolder}/dist/test/suite/index"
+				],
+				"outFiles": [
+					"${workspaceFolder}/dist/test/**/*.js"
+				],
+				"preLaunchTask": "npm: test-compile"
+			}
+		]
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"type": "npm",
+				"script": "watch",
+				"problemMatcher": "$tsc-watch",
+				"isBackground": true,
+				"presentation": {
+					"reveal": "never"
+				},
+				"group": {
+					"kind": "build",
+					"isDefault": true
+				}
+			},
+			{
+				"type": "npm",
+				"script": "test-compile",
+				"problemMatcher": "$tsc",
+				"presentation": {
+					"reveal": "never"
+				},
+				"group": "build"
+			}
+		]
+	}
+}

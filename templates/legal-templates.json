@@ -1,0 +1,408 @@
+[
+  {
+    "id": "nda-standard",
+    "name": "Non-Disclosure Agreement (Standard)",
+    "description": "Standard bilateral non-disclosure agreement for business purposes",
+    "category": "Contracts",
+    "template": "# NON-DISCLOSURE AGREEMENT\n\nThis Non-Disclosure Agreement (\"Agreement\") is made and entered into as of {{effectiveDate}} (the \"Effective Date\") by and between:\n\n**{{partyOneName}}**, a {{partyOneEntityType}} organized under the laws of {{partyOneJurisdiction}}, with its principal place of business at {{partyOneAddress}} (\"{{partyOneShortName}}\"), and\n\n**{{partyTwoName}}**, a {{partyTwoEntityType}} organized under the laws of {{partyTwoJurisdiction}}, with its principal place of business at {{partyTwoAddress}} (\"{{partyTwoShortName}}\").\n\n**WHEREAS**, {{partyOneShortName}} and {{partyTwoShortName}} wish to explore a potential business relationship (the \"Purpose\") in connection with which {{partyOneShortName}} may disclose its Confidential Information to {{partyTwoShortName}} or {{partyTwoShortName}} may disclose its Confidential Information to {{partyOneShortName}}; and\n\n**WHEREAS**, {{partyOneShortName}} and {{partyTwoShortName}} wish to establish terms governing the use and protection of such Confidential Information.\n\n**NOW, THEREFORE**, in consideration of the mutual covenants contained herein, the parties agree as follows:\n\n## 1. DEFINITION OF CONFIDENTIAL INFORMATION\n\n\"Confidential Information\" means any information disclosed by either party (the \"Disclosing Party\") to the other party (the \"Receiving Party\"), either directly or indirectly, in writing, orally or by inspection of tangible objects, which is designated as \"Confidential,\" \"Proprietary\" or some similar designation, or that should reasonably be understood to be confidential given the nature of the information and the circumstances of disclosure. Confidential Information shall include, but not be limited to: {{confidentialInfoTypes}}. \n\nConfidential Information shall not include any information that: (a) was publicly known and made generally available prior to the time of disclosure by the Disclosing Party; (b) becomes publicly known and made generally available after disclosure by the Disclosing Party through no action or inaction of the Receiving Party; (c) is already in the possession of the Receiving Party at the time of disclosure as shown by the Receiving Party's files and records; (d) is obtained by the Receiving Party from a third party without a breach of the third party's obligations of confidentiality; or (e) is independently developed by the Receiving Party without use of or reference to the Disclosing Party's Confidential Information.\n\n## 2. OBLIGATIONS OF RECEIVING PARTY\n\nThe Receiving Party shall: (a) hold the Disclosing Party's Confidential Information in strict confidence; (b) not disclose such Confidential Information to any third parties; (c) use the same degree of care to protect the confidentiality of the Disclosing Party's Confidential Information that it uses to protect its own confidential information, but in no event less than reasonable care; (d) limit access to the Disclosing Party's Confidential Information to those of its employees, agents and representatives who need such access for the Purpose and who have signed confidentiality agreements containing, or are otherwise bound by, confidentiality obligations at least as restrictive as those in this Agreement; and (e) not use any Confidential Information for any purpose outside the scope of the Purpose without the Disclosing Party's prior written permission.\n\n## 3. TERM AND TERMINATION\n\nThis Agreement shall commence on the Effective Date and continue for a period of {{term}} years thereafter. The confidentiality obligations set forth in this Agreement shall survive for a period of {{survivalTerm}} years following the expiration or termination of this Agreement.\n\n## 4. RETURN OF MATERIALS\n\nUpon the earlier of (i) the completion or termination of the Purpose, (ii) the termination of this Agreement, or (iii) at any time upon the request of the Disclosing Party, the Receiving Party shall promptly return to the Disclosing Party all copies, whether in written, electronic or other form or media, of the Disclosing Party's Confidential Information, or destroy all such copies and certify in writing to the Disclosing Party that such Confidential Information has been destroyed.\n\n## 5. REMEDIES\n\nThe Receiving Party acknowledges that any breach of its obligations under this Agreement may cause irreparable harm to the Disclosing Party for which monetary damages may not be adequate. Accordingly, the Disclosing Party may seek injunctive or other equitable relief to prevent or stop any breach of this Agreement, in addition to all other remedies available at law or in equity.\n\n## 6. MISCELLANEOUS\n\n6.1 **Governing Law**. This Agreement shall be governed by and construed in accordance with the laws of {{governingLaw}}, without regard to its conflict of laws principles.\n\n6.2 **Entire Agreement**. This Agreement constitutes the entire agreement between the parties with respect to the subject matter hereof and supersedes all prior and contemporaneous agreements or communications.\n\n6.3 **Amendments**. This Agreement may not be modified except by a written instrument signed by authorized representatives of both parties.\n\n6.4 **Severability**. If any provision of this Agreement is found to be unenforceable or invalid, that provision shall be limited or eliminated to the minimum extent necessary so that this Agreement shall otherwise remain in full force and effect.\n\n6.5 **Assignment**. This Agreement may not be assigned by either party without the prior written consent of the other party.\n\n6.6 **Counterparts**. This Agreement may be executed in counterparts, each of which shall be deemed an original, but all of which together shall constitute one and the same instrument.\n\nIN WITNESS WHEREOF, the parties have executed this Agreement as of the Effective Date.\n\n**{{partyOneName}}**\n\nBy: ________________________\nName: {{partyOneSignatoryName}}\nTitle: {{partyOneSignatoryTitle}}\nDate: ________________________\n\n**{{partyTwoName}}**\n\nBy: ________________________\nName: {{partyTwoSignatoryName}}\nTitle: {{partyTwoSignatoryTitle}}\nDate: ________________________",
+    "schema": {
+      "type": "object",
+      "required": [
+        "effectiveDate",
+        "partyOneName",
+        "partyOneEntityType",
+        "partyOneJurisdiction",
+        "partyOneAddress",
+        "partyOneShortName",
+        "partyTwoName",
+        "partyTwoEntityType",
+        "partyTwoJurisdiction",
+        "partyTwoAddress",
+        "partyTwoShortName",
+        "confidentialInfoTypes",
+        "term",
+        "survivalTerm",
+        "governingLaw",
+        "partyOneSignatoryName",
+        "partyOneSignatoryTitle",
+        "partyTwoSignatoryName",
+        "partyTwoSignatoryTitle"
+      ],
+      "properties": {
+        "effectiveDate": {
+          "type": "string",
+          "format": "date",
+          "description": "The effective date of the agreement"
+        },
+        "partyOneName": {
+          "type": "string",
+          "description": "Full legal name of the first party"
+        },
+        "partyOneEntityType": {
+          "type": "string",
+          "description": "Type of legal entity (e.g., corporation, LLC)",
+          "enum": ["corporation", "limited liability company", "partnership", "sole proprietorship", "individual"]
+        },
+        "partyOneJurisdiction": {
+          "type": "string",
+          "description": "Jurisdiction where the first party is organized"
+        },
+        "partyOneAddress": {
+          "type": "string",
+          "description": "Business address of the first party"
+        },
+        "partyOneShortName": {
+          "type": "string",
+          "description": "Short name or abbreviation for the first party"
+        },
+        "partyTwoName": {
+          "type": "string",
+          "description": "Full legal name of the second party"
+        },
+        "partyTwoEntityType": {
+          "type": "string",
+          "description": "Type of legal entity (e.g., corporation, LLC)",
+          "enum": ["corporation", "limited liability company", "partnership", "sole proprietorship", "individual"]
+        },
+        "partyTwoJurisdiction": {
+          "type": "string",
+          "description": "Jurisdiction where the second party is organized"
+        },
+        "partyTwoAddress": {
+          "type": "string",
+          "description": "Business address of the second party"
+        },
+        "partyTwoShortName": {
+          "type": "string",
+          "description": "Short name or abbreviation for the second party"
+        },
+        "confidentialInfoTypes": {
+          "type": "string",
+          "description": "Types of confidential information covered",
+          "default": "trade secrets, business plans, product roadmaps, customer lists, financial information, technical specifications, software code, and any other proprietary information"
+        },
+        "term": {
+          "type": "number",
+          "description": "Duration of the agreement in years",
+          "default": 2
+        },
+        "survivalTerm": {
+          "type": "number",
+          "description": "Duration of confidentiality obligations after termination in years",
+          "default": 5
+        },
+        "governingLaw": {
+          "type": "string",
+          "description": "Jurisdiction whose laws govern the agreement",
+          "default": "the State of Delaware"
+        },
+        "partyOneSignatoryName": {
+          "type": "string",
+          "description": "Name of person signing for the first party"
+        },
+        "partyOneSignatoryTitle": {
+          "type": "string",
+          "description": "Title of person signing for the first party"
+        },
+        "partyTwoSignatoryName": {
+          "type": "string",
+          "description": "Name of person signing for the second party"
+        },
+        "partyTwoSignatoryTitle": {
+          "type": "string",
+          "description": "Title of person signing for the second party"
+        }
+      }
+    }
+  },
+  {
+    "id": "privacy-policy-standard",
+    "name": "Privacy Policy (GDPR & CCPA Compliant)",
+    "description": "Standard privacy policy compliant with GDPR and CCPA requirements",
+    "category": "Privacy",
+    "template": "# PRIVACY POLICY\n\n**Last Updated: {{lastUpdated}}**\n\n## 1. INTRODUCTION\n\nThis Privacy Policy describes how {{companyName}} (\"we,\" \"our,\" or \"us\") collects, uses, and shares personal information when you visit our website at {{websiteUrl}} or use our services (collectively, the \"Services\"). This policy applies to visitors and users of our Services, regardless of their location.\n\nBy using our Services, you agree to the collection and use of information in accordance with this policy. If you do not agree with any part of this policy, please do not use our Services.\n\n## 2. INFORMATION WE COLLECT\n\n### 2.1 Information You Provide to Us\n\nWe collect information you provide directly to us when you:\n\n- {{userProvidedInfoContext}}\n\nThis information may include:\n\n- {{userProvidedInfoTypes}}\n\n### 2.2 Information We Collect Automatically\n\nWhen you use our Services, we automatically collect certain information, including:\n\n- {{automaticallyCollectedInfoTypes}}\n\n### 2.3 Information from Third Parties\n\nWe may receive information about you from third parties, such as:\n\n- {{thirdPartyInfoSources}}\n\n## 3. HOW WE USE YOUR INFORMATION\n\nWe use the information we collect for various purposes, including to:\n\n- {{purposesOfProcessing}}\n\n## 4. LEGAL BASIS FOR PROCESSING (FOR EEA USERS)\n\nIf you are in the European Economic Area (EEA), we process your personal data when:\n\n- We need to use your personal data to perform our responsibilities under our contract with you (e.g., processing payments for and providing the Services you have requested).\n- We have a legitimate interest in processing your personal data, which may include: providing and improving our Services, marketing new features or products that may be of interest, and promoting safety and security.\n- We need to process your personal data to comply with our legal obligations.\n- You have given your consent to the processing of your personal data for one or more specific purposes.\n\n## 5. DATA SHARING AND DISCLOSURE\n\nWe share your personal information with the following categories of recipients:\n\n- {{dataRecipientsCategories}}\n\n## 6. YOUR RIGHTS AND CHOICES\n\n### 6.1 Access, Correction, and Deletion\n\nYou may have the right to access, correct, or delete personal information we have collected about you. You can request these actions by contacting us at {{privacyContactEmail}}.\n\n### 6.2 European Privacy Rights\n\nIf you are in the European Economic Area (EEA), you have certain rights under the General Data Protection Regulation (GDPR), including:\n\n- The right to access, update, or delete your personal data\n- The right of rectification if information is inaccurate or incomplete\n- The right to object to our processing of your personal data\n- The right of restriction, meaning we only store your personal data without further processing\n- The right to data portability\n- The right to withdraw consent at any time where we relied on your consent to process your personal data\n\nTo exercise these rights, please contact us at {{privacyContactEmail}}.\n\n### 6.3 California Privacy Rights\n\nIf you are a California resident, you have rights under the California Consumer Privacy Act (CCPA), including:\n\n- The right to know what personal information we collect, use, disclose, and sell\n- The right to delete personal information we have collected about you\n- The right to opt-out of the sale of your personal information\n- The right to non-discrimination for exercising your CCPA rights\n\nTo exercise these rights, please contact us at {{privacyContactEmail}} or call us at {{privacyContactPhone}}.\n\nIn the preceding 12 months, we have {{hasCompanySoldData}} sold personal information and {{hasCompanyDisclosedData}} disclosed personal information for business purposes.\n\n## 7. DATA RETENTION\n\nWe retain your personal information for as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required or permitted by law. When determining how long to retain information, we consider the amount, nature, and sensitivity of the information, the potential risk of harm from unauthorized use or disclosure, the purposes for which we process the information, and applicable legal requirements.\n\n## 8. DATA TRANSFERS\n\nYour information may be transferred to — and maintained on — computers located outside of your state, province, country, or other governmental jurisdiction where the data protection laws may differ from those in your jurisdiction. If you are located outside {{companyCountry}} and choose to provide information to us, please note that we transfer the information to {{companyCountry}} and process it there.\n\n{{dataTransferMechanism}}\n\n## 9. DATA SECURITY\n\nWe implement appropriate technical and organizational measures to protect the security of your personal information. However, please be aware that no method of transmission over the Internet or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your personal information, we cannot guarantee its absolute security.\n\n## 10. CHILDREN'S PRIVACY\n\nOur Services are not directed to children under the age of {{childrenMinimumAge}} years. We do not knowingly collect personal information from children under {{childrenMinimumAge}}. If we learn that we have collected personal information from a child under {{childrenMinimumAge}}, we will take steps to delete that information as soon as possible. If you believe we might have any information from or about a child under {{childrenMinimumAge}}, please contact us at {{privacyContactEmail}}.\n\n## 11. CHANGES TO THIS PRIVACY POLICY\n\nWe may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the \"Last Updated\" date at the top of this Privacy Policy. You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.\n\n## 12. CONTACT US\n\nIf you have any questions about this Privacy Policy, please contact us at:\n\n{{companyName}}\n{{companyAddress}}\n{{privacyContactEmail}}\n{{privacyContactPhone}}\n\n## 13. DATA PROTECTION OFFICER\n\n{{dataProtectionOfficerInfo}}",
+    "schema": {
+      "type": "object",
+      "required": [
+        "lastUpdated",
+        "companyName",
+        "websiteUrl",
+        "userProvidedInfoContext",
+        "userProvidedInfoTypes",
+        "automaticallyCollectedInfoTypes",
+        "thirdPartyInfoSources",
+        "purposesOfProcessing",
+        "dataRecipientsCategories",
+        "privacyContactEmail",
+        "privacyContactPhone",
+        "hasCompanySoldData",
+        "hasCompanyDisclosedData",
+        "companyCountry",
+        "dataTransferMechanism",
+        "childrenMinimumAge",
+        "companyAddress",
+        "dataProtectionOfficerInfo"
+      ],
+      "properties": {
+        "lastUpdated": {
+          "type": "string",
+          "format": "date",
+          "description": "Last updated date of the privacy policy"
+        },
+        "companyName": {
+          "type": "string",
+          "description": "Full legal name of the company"
+        },
+        "websiteUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "Company website URL"
+        },
+        "userProvidedInfoContext": {
+          "type": "string",
+          "description": "Context in which users provide information (e.g., register for an account, make a purchase)",
+          "default": "create an account, make a purchase, sign up for our newsletter, respond to a survey, fill out a form, or otherwise interact with our Services"
+        },
+        "userProvidedInfoTypes": {
+          "type": "string",
+          "description": "Types of information users provide directly",
+          "default": "name, email address, postal address, phone number, payment information, demographic information, preferences, and any other information you choose to provide"
+        },
+        "automaticallyCollectedInfoTypes": {
+          "type": "string",
+          "description": "Types of information collected automatically",
+          "default": "device information (such as your IP address, browser type, and operating system), usage information (such as pages visited, time spent on our Services, and actions taken), and location information"
+        },
+        "thirdPartyInfoSources": {
+          "type": "string",
+          "description": "Third-party sources of user information",
+          "default": "business partners, advertising networks, analytics providers, data brokers, and social media platforms"
+        },
+        "purposesOfProcessing": {
+          "type": "string",
+          "description": "Purposes for processing personal data",
+          "default": "provide, maintain, and improve our Services, communicate with you about our Services, personalize your experience, process transactions, send promotional communications, monitor and analyze usage trends, detect and prevent fraud, and comply with legal obligations"
+        },
+        "dataRecipientsCategories": {
+          "type": "string",
+          "description": "Categories of third parties with whom data is shared",
+          "default": "service providers who help us provide the Services, advertising partners, analytics providers, business partners for joint offerings, law enforcement or government entities when required by law, and other users when you choose to share information publicly"
+        },
+        "privacyContactEmail": {
+          "type": "string",
+          "format": "email",
+          "description": "Email address for privacy inquiries"
+        },
+        "privacyContactPhone": {
+          "type": "string",
+          "description": "Phone number for privacy inquiries"
+        },
+        "hasCompanySoldData": {
+          "type": "string",
+          "enum": ["have", "have not"],
+          "description": "Whether company has sold personal data in the last 12 months"
+        },
+        "hasCompanyDisclosedData": {
+          "type": "string",
+          "enum": ["have", "have not"],
+          "description": "Whether company has disclosed personal data for business purposes in the last 12 months"
+        },
+        "companyCountry": {
+          "type": "string",
+          "description": "Country where the company is based",
+          "default": "the United States"
+        },
+        "dataTransferMechanism": {
+          "type": "string",
+          "description": "Mechanism used for international data transfers",
+          "default": "For transfers from the EEA to countries not deemed by the European Commission to provide an adequate level of protection for personal data, we rely on appropriate safeguards such as Standard Contractual Clauses approved by the European Commission or binding corporate rules."
+        },
+        "childrenMinimumAge": {
+          "type": "number",
+          "description": "Minimum age of children for data collection",
+          "default": 13
+        },
+        "companyAddress": {
+          "type": "string",
+          "description": "Company physical address"
+        },
+        "dataProtectionOfficerInfo": {
+          "type": "string",
+          "description": "Information about the Data Protection Officer (if applicable)",
+          "default": "Our Data Protection Officer can be contacted at dpo@example.com."
+        }
+      }
+    }
+  },
+  {
+    "id": "employment-agreement-standard",
+    "name": "Employment Agreement (Standard)",
+    "description": "Standard employment agreement with IP protection provisions",
+    "category": "Employment",
+    "template": "# EMPLOYMENT AGREEMENT\n\nThis Employment Agreement (the \"Agreement\") is made and entered into as of {{effectiveDate}} (the \"Effective Date\"), by and between:\n\n**{{employerName}}**, a {{employerEntityType}} organized under the laws of {{employerJurisdiction}}, with its principal place of business at {{employerAddress}} (the \"Employer\"), and\n\n**{{employeeName}}**, an individual residing at {{employeeAddress}} (the \"Employee\").\n\n## 1. EMPLOYMENT\n\n1.1 **Position**. The Employer hereby employs the Employee, and the Employee hereby accepts employment with the Employer, as a {{employeePosition}} reporting to {{employeeSupervisor}}. The Employee shall perform the duties and responsibilities assigned by the Employer related to this position, as well as such other duties and responsibilities as may be assigned from time to time.\n\n1.2 **Start Date**. The Employee's employment under this Agreement shall commence on {{startDate}} (the \"Start Date\").\n\n1.3 **Employment Type**. This position is {{employmentType}}.\n\n1.4 **Work Location**. The Employee shall primarily work at {{workLocation}}. {{remoteWorkPolicy}}\n\n## 2. COMPENSATION AND BENEFITS\n\n2.1 **Base Salary**. The Employer shall pay the Employee a base salary of {{baseSalary}} per {{salaryFrequency}}, subject to applicable withholdings and deductions, and payable in accordance with the Employer's standard payroll practices.\n\n2.2 **Bonus**. {{bonusStructure}}\n\n2.3 **Equity**. {{equityGrant}}\n\n2.4 **Benefits**. The Employee shall be eligible to participate in the employee benefit plans and programs generally available to the Employer's employees, subject to the terms and conditions of such plans and programs. The Employer reserves the right to amend, modify, or terminate any benefit plans or programs at any time and for any reason.\n\n2.5 **Vacation and Paid Time Off**. The Employee shall be entitled to {{vacationDays}} days of paid vacation per year, in addition to holidays observed by the Employer. Vacation days shall accrue and may be used in accordance with the Employer's policies.\n\n## 3. TERM AND TERMINATION\n\n3.1 **Term**. The term of this Agreement shall commence on the Start Date and continue until terminated as provided herein.\n\n3.2 **Termination by Employer for Cause**. The Employer may terminate the Employee's employment for Cause at any time, effective immediately upon written notice to the Employee. For purposes of this Agreement, \"Cause\" shall mean: (a) the Employee's material breach of this Agreement; (b) the Employee's conviction of, or plea of guilty or nolo contendere to, a felony or any crime involving moral turpitude; (c) the Employee's willful misconduct or gross negligence in the performance of the Employee's duties; (d) the Employee's fraud, embezzlement, or misappropriation relating to the Employer; or (e) the Employee's failure to follow the reasonable and lawful instructions of the Employer.\n\n3.3 **Termination by Employer Without Cause**. The Employer may terminate the Employee's employment without Cause at any time by providing {{terminationNoticePeriod}} days' written notice to the Employee.\n\n3.4 **Termination by Employee**. The Employee may terminate employment at any time by providing {{resignationNoticePeriod}} days' written notice to the Employer.\n\n3.5 **Severance**. {{severanceProvisions}}\n\n## 4. CONFIDENTIALITY AND INTELLECTUAL PROPERTY\n\n4.1 **Confidential Information**. The Employee acknowledges that, during employment with the Employer, the Employee will have access to and become acquainted with Confidential Information. \"Confidential Information\" means all non-public information, whether oral, written, or in electronic form, concerning the Employer and its business, including but not limited to: trade secrets, business plans, financial information, customer lists, supplier information, pricing strategies, marketing plans, technical data, product development information, and employee information. The Employee agrees not to disclose any Confidential Information to any third party without the Employer's prior written consent and to use Confidential Information only for the Employer's benefit and in accordance with the Employer's policies.\n\n4.2 **Intellectual Property**. The Employee agrees that all works, inventions, discoveries, improvements, designs, formulas, processes, techniques, know-how, and ideas conceived, produced, created, discovered, authored, or reduced to practice by the Employee, either alone or with others, during employment with the Employer that relate to the Employer's business or research and development (\"Intellectual Property\") shall be the sole and exclusive property of the Employer. The Employee hereby assigns to the Employer all right, title, and interest in and to any Intellectual Property. The Employee agrees to execute and deliver any documents requested by the Employer to establish or document the Employer's ownership of Intellectual Property.\n\n## 5. NON-COMPETITION AND NON-SOLICITATION\n\n5.1 **Non-Competition**. During employment with the Employer and for a period of {{nonCompetePeriod}} following the termination of employment for any reason, the Employee shall not, directly or indirectly, engage in any business that competes with the Employer in {{geographicRestriction}}.\n\n5.2 **Non-Solicitation of Customers**. During employment with the Employer and for a period of {{customerNonSolicitPeriod}} following the termination of employment for any reason, the Employee shall not, directly or indirectly, solicit or attempt to solicit any customer, client, or business partner of the Employer with whom the Employee had contact or about whom the Employee learned Confidential Information during employment with the Employer.\n\n5.3 **Non-Solicitation of Employees**. During employment with the Employer and for a period of {{employeeNonSolicitPeriod}} following the termination of employment for any reason, the Employee shall not, directly or indirectly, solicit, hire, or attempt to solicit or hire any employee of the Employer.\n\n## 6. GENERAL PROVISIONS\n\n6.1 **Governing Law**. This Agreement shall be governed by and construed in accordance with the laws of {{governingLaw}}, without regard to its conflict of laws principles.\n\n6.2 **Entire Agreement**. This Agreement constitutes the entire agreement between the parties with respect to the subject matter hereof and supersedes all prior and contemporaneous agreements or communications.\n\n6.3 **Amendments**. This Agreement may not be modified except by a written instrument signed by authorized representatives of both parties.\n\n6.4 **Severability**. If any provision of this Agreement is found to be unenforceable or invalid, that provision shall be limited or eliminated to the minimum extent necessary so that this Agreement shall otherwise remain in full force and effect.\n\n6.5 **Assignment**. The Employee may not assign this Agreement. The Employer may assign this Agreement to a successor in interest, including but not limited to a purchaser of all or substantially all of the Employer's assets or business.\n\n6.6 **Counterparts**. This Agreement may be executed in counterparts, each of which shall be deemed an original, but all of which together shall constitute one and the same instrument.\n\nIN WITNESS WHEREOF, the parties have executed this Agreement as of the Effective Date.\n\n**{{employerName}}**\n\nBy: ________________________\nName: {{employerSignatoryName}}\nTitle: {{employerSignatoryTitle}}\nDate: ________________________\n\n**{{employeeName}}**\n\nBy: ________________________\nDate: ________________________",
+    "schema": {
+      "type": "object",
+      "required": [
+        "effectiveDate",
+        "employerName",
+        "employerEntityType",
+        "employerJurisdiction",
+        "employerAddress",
+        "employeeName",
+        "employeeAddress",
+        "employeePosition",
+        "employeeSupervisor",
+        "startDate",
+        "employmentType",
+        "workLocation",
+        "remoteWorkPolicy",
+        "baseSalary",
+        "salaryFrequency",
+        "bonusStructure",
+        "equityGrant",
+        "vacationDays",
+        "terminationNoticePeriod",
+        "resignationNoticePeriod",
+        "severanceProvisions",
+        "nonCompetePeriod",
+        "geographicRestriction",
+        "customerNonSolicitPeriod",
+        "employeeNonSolicitPeriod",
+        "governingLaw",
+        "employerSignatoryName",
+        "employerSignatoryTitle"
+      ],
+      "properties": {
+        "effectiveDate": {
+          "type": "string",
+          "format": "date",
+          "description": "The effective date of the agreement"
+        },
+        "employerName": {
+          "type": "string",
+          "description": "Full legal name of the employer"
+        },
+        "employerEntityType": {
+          "type": "string",
+          "description": "Type of legal entity (e.g., corporation, LLC)",
+          "enum": ["corporation", "limited liability company", "partnership", "sole proprietorship"]
+        },
+        "employerJurisdiction": {
+          "type": "string",
+          "description": "Jurisdiction where the employer is organized"
+        },
+        "employerAddress": {
+          "type": "string",
+          "description": "Business address of the employer"
+        },
+        "employeeName": {
+          "type": "string",
+          "description": "Full legal name of the employee"
+        },
+        "employeeAddress": {
+          "type": "string",
+          "description": "Residential address of the employee"
+        },
+        "employeePosition": {
+          "type": "string",
+          "description": "Job title or position of the employee"
+        },
+        "employeeSupervisor": {
+          "type": "string",
+          "description": "Title or name of the employee's supervisor"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Employee's start date"
+        },
+        "employmentType": {
+          "type": "string",
+          "description": "Type of employment (e.g., full-time, part-time)",
+          "enum": ["full-time", "part-time", "temporary", "contract"]
+        },
+        "workLocation": {
+          "type": "string",
+          "description": "Primary work location for the employee"
+        },
+        "remoteWorkPolicy": {
+          "type": "string",
+          "description": "Policy regarding remote work, if applicable",
+          "default": "The Employee may be permitted to work remotely in accordance with the Employer's remote work policy."
+        },
+        "baseSalary": {
+          "type": "string",
+          "description": "Base salary amount (including currency)"
+        },
+        "salaryFrequency": {
+          "type": "string",
+          "description": "Frequency of salary payment",
+          "enum": ["year", "month", "week", "hour"]
+        },
+        "bonusStructure": {
+          "type": "string",
+          "description": "Description of bonus or incentive structure",
+          "default": "The Employee may be eligible for an annual bonus of up to [X]% of the Employee's base salary, based on individual and company performance, as determined by the Employer in its sole discretion."
+        },
+        "equityGrant": {
+          "type": "string",
+          "description": "Description of equity grant, if applicable",
+          "default": "The Employee shall be granted [X] [stock options/restricted stock units] pursuant to the Employer's equity incentive plan, subject to the terms and conditions of such plan and the applicable award agreement."
+        },
+        "vacationDays": {
+          "type": "number",
+          "description": "Number of vacation days per year",
+          "default": 15
+        },
+        "terminationNoticePeriod": {
+          "type": "number",
+          "description": "Notice period for termination without cause (in days)",
+          "default": 14
+        },
+        "resignationNoticePeriod": {
+          "type": "number",
+          "description": "Notice period for employee resignation (in days)",
+          "default": 14
+        },
+        "severanceProvisions": {
+          "type": "string",
+          "description": "Provisions regarding severance pay",
+          "default": "If the Employer terminates the Employee's employment without Cause, the Employee shall be entitled to receive severance pay equal to [X] weeks of the Employee's base salary, subject to the Employee's execution of a release of claims in a form acceptable to the Employer."
+        },
+        "nonCompetePeriod": {
+          "type": "string",
+          "description": "Duration of non-compete obligation after employment",
+          "default": "twelve (12) months"
+        },
+        "geographicRestriction": {
+          "type": "string",
+          "description": "Geographic scope of non-compete restriction",
+          "default": "any location where the Employer conducts business or has concrete plans to conduct business"
+        },
+        "customerNonSolicitPeriod": {
+          "type": "string",
+          "description": "Duration of customer non-solicitation obligation after employment",
+          "default": "twelve (12) months"
+        },
+        "employeeNonSolicitPeriod": {
+          "type": "string",
+          "description": "Duration of employee non-solicitation obligation after employment",
+          "default": "twelve (12) months"
+        },
+        "governingLaw": {
+          "type": "string",
+          "description": "Jurisdiction whose laws govern the agreement",
+          "default": "the State of Delaware"
+        },
+        "employerSignatoryName": {
+          "type": "string",
+          "description": "Name of person signing for the employer"
+        },
+        "employerSignatoryTitle": {
+          "type": "string",
+          "description": "Title of person signing for the employer"
+        }
+      }
+    }
+  }
+]

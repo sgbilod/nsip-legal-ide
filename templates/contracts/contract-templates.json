@@ -1,0 +1,145 @@
+{
+  "templates": [
+    {
+      "id": "service-agreement",
+      "name": "Service Agreement",
+      "description": "A smart contract for service agreements between a provider and a client",
+      "category": "agreements",
+      "path": "templates/contracts/agreements/ServiceAgreement.sol",
+      "parameters": [
+        {
+          "name": "providerAddress",
+          "description": "Ethereum address of the service provider",
+          "type": "address",
+          "required": true
+        },
+        {
+          "name": "clientAddress",
+          "description": "Ethereum address of the client",
+          "type": "address",
+          "required": true
+        },
+        {
+          "name": "providerName",
+          "description": "Name of the service provider",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "clientName",
+          "description": "Name of the client",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "serviceName",
+          "description": "Name of the service being provided",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "durationDays",
+          "description": "Duration of the agreement in days",
+          "type": "uint256",
+          "required": true
+        },
+        {
+          "name": "paymentAmount",
+          "description": "Amount to be paid for the service (in wei)",
+          "type": "uint256",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "legal-escrow",
+      "name": "Legal Escrow",
+      "description": "An escrow contract for legal transactions with arbitration support",
+      "category": "escrow",
+      "path": "templates/contracts/escrow/LegalEscrow.sol",
+      "parameters": [
+        {
+          "name": "sellerAddress",
+          "description": "Ethereum address of the seller",
+          "type": "address",
+          "required": true
+        },
+        {
+          "name": "buyerAddress",
+          "description": "Ethereum address of the buyer",
+          "type": "address",
+          "required": true
+        },
+        {
+          "name": "arbitratorAddress",
+          "description": "Ethereum address of the arbitrator",
+          "type": "address",
+          "required": true
+        },
+        {
+          "name": "transactionDescription",
+          "description": "Description of the transaction",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "arbitratorFeePercentage",
+          "description": "Percentage fee for arbitration (0-10)",
+          "type": "uint256",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "ip-license",
+      "name": "IP License",
+      "description": "A contract for intellectual property licensing with royalty payments",
+      "category": "licensing",
+      "path": "templates/contracts/licensing/IPLicense.sol",
+      "parameters": [
+        {
+          "name": "licensorAddress",
+          "description": "Ethereum address of the IP owner/licensor",
+          "type": "address",
+          "required": true
+        },
+        {
+          "name": "licenseeAddress",
+          "description": "Ethereum address of the licensee",
+          "type": "address",
+          "required": true
+        },
+        {
+          "name": "ipName",
+          "description": "Name of the intellectual property",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "licenseType",
+          "description": "Type of license (exclusive, non-exclusive, etc.)",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "durationMonths",
+          "description": "Duration of the license in months",
+          "type": "uint256",
+          "required": true
+        },
+        {
+          "name": "licenseFee",
+          "description": "License fee amount (in wei)",
+          "type": "uint256",
+          "required": true
+        },
+        {
+          "name": "royaltyPercentage",
+          "description": "Percentage of royalties (0-100)",
+          "type": "uint256",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

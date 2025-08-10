@@ -1,0 +1,486 @@
+import { ServiceRegistry } from '../core/serviceRegistry';
+import { Logger } from '../core/logger';
+import { EventBus } from '../core/e    /**
+     * Deploy a smart contract
+     * @param data Contains contractType, walletAddress, and params
+     * @returns Contract address
+     */
+    async deployContract(
+        data: { contractType: 'LEGAL_AGREEMENT' | 'PAYMENT_ESCROW', walletAddress: string, params: any[] }
+    ): Promise<string> {
+        try {port { ethers } from 'ethers';
+
+/**
+ * Smart Contract Integration - Blockchain integration for legal agreements
+ */
+export class SmartContractManager {
+    private logger: Logger;
+    private eventBus: EventBus;
+    private provider: ethers.providers.Provider | null = null;
+    private contracts: Map<string, ethers.Contract> = new Map();
+    private wallets: Map<string, ethers.Wallet> = new Map();
+    
+    // ABI for a simple legal agreement contract
+    private readonly LEGAL_AGREEMENT_ABI = [
+        "function createAgreement(string documentHash, uint256 validUntil, address[] parties) public returns (uint256)",
+        "function signAgreement(uint256 agreementId) public",
+        "function isAgreementValid(uint256 agreementId) public view returns (bool)",
+        "function getAgreementDetails(uint256 agreementId) public view returns (string, uint256, address[], bool[])",
+        "function getAgreementCount() public view returns (uint256)",
+        "event AgreementCreated(uint256 indexed agreementId, string documentHash, address creator)",
+        "event AgreementSigned(uint256 indexed agreementId, address signer)",
+        "event AgreementCompleted(uint256 indexed agreementId)"
+    ];
+    
+    // ABI for a simple payment escrow contract
+    private readonly PAYMENT_ESCROW_ABI = [
+        "function createEscrow(address payee, uint256 amount, string terms) public payable returns (uint256)",
+        "function releasePayment(uint256 escrowId) public",
+        "function cancelEscrow(uint256 escrowId) public",
+        "function getEscrowDetails(uint256 escrowId) public view returns (address, address, uint256, string, bool)",
+        "event EscrowCreated(uint256 indexed escrowId, address payer, address payee, uint256 amount)",
+        "event PaymentReleased(uint256 indexed escrowId)",
+        "event EscrowCancelled(uint256 indexed escrowId)"
+    ];
+    
+    /**
+     * Create a new Smart Contract Manager
+     */
+    constructor() {
+        this.logger = ServiceRegistry.getInstance().get<Logger>('logger');
+        this.eventBus = ServiceRegistry.getInstance().get<EventBus>('eventBus');
+    }
+    
+    /**
+     * Initialize the smart contract manager
+     */
+    async initialize(): Promise<void> {
+        this.logger.info('Initializing smart contract manager');
+        
+        try {
+            // Initialize blockchain provider
+            await this.initializeProvider();
+            
+            // Register for events
+            this.eventBus.subscribe<{contractType: "LEGAL_AGREEMENT" | "PAYMENT_ESCROW", walletAddress: string, params: any[]}>('contract.deploy', {
+                id: 'smart-contract-deploy',
+                handle: this.deployContract.bind(this)
+            });
+            
+            this.eventBus.subscribe<{contractAddress: string, walletAddress: string, methodName: string, params: any[], value?: string}>('contract.call', {
+                id: 'smart-contract-call',
+                handle: this.callContractMethod.bind(this)
+            });
+            
+            this.eventBus.subscribe<string>('wallet.create', {
+                id: 'smart-contract-wallet',
+                handle: this.createWallet.bind(this)
+            });
+            
+            this.logger.info('Smart contract manager initialized');
+        } catch (error) {
+            this.logger.error('Failed to initialize smart contract manager', error);
+            throw new Error(`Smart contract manager initialization failed: ${(error as Error).message}`);
+        }
+    }
+    
+    /**
+     * Initialize blockchain provider
+     */
+    private async initializeProvider(): Promise<void> {
+        try {
+            // In a real implementation, this would connect to a blockchain node
+            // For this example, we'll use Ethers.js JsonRpcProvider with a local or test network
+            
+            // Use environment variable or default to a test network
+            const rpcUrl = process.env.BLOCKCHAIN_RPC_URL || 'https://eth-sepolia.g.alchemy.com/v2/demo';
+            
+            this.provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+            
+            // Test the connection
+            const network = await this.provider.getNetwork();
+            this.logger.info(`Connected to blockchain network: ${network.name} (chainId: ${network.chainId})`);
+        } catch (error) {
+            this.logger.error('Failed to initialize blockchain provider', error);
+            throw new Error(`Blockchain provider initialization failed: ${(error as Error).message}`);
+        }
+    }
+    
+    /**
+     * Create a new wallet
+     * @param passphrase Passphrase to encrypt the wallet
+     * @returns Wallet address
+     */
+    async createWallet(passphrase: string): Promise<string> {
+        try {
+            // Generate a random wallet
+            const wallet = ethers.Wallet.createRandom();
+            
+            // Connect the wallet to the provider
+            if (this.provider) {
+                const connectedWallet = wallet.connect(this.provider);
+                
+                // Store the wallet
+                this.wallets.set(wallet.address, connectedWallet);
+                
+                // In a real implementation, we would encrypt and securely store the wallet
+                // For this example, we'll just log the wallet address
+                this.logger.info(`Created new wallet with address: ${wallet.address}`);
+                
+                // Publish wallet created event
+                this.eventBus.publish('wallet.created', {
+                    address: wallet.address
+                });
+                
+                return wallet.address;
+            } else {
+                throw new Error('Blockchain provider not initialized');
+            }
+        } catch (error) {
+            this.logger.error('Failed to create wallet', error);
+            throw new Error(`Wallet creation failed: ${(error as Error).message}`);
+        }
+    }
+    
+    /**
+     * Deploy a new contract
+     * @param contractType Type of contract to deploy
+     * @param walletAddress Wallet address to use for deployment
+     * @param params Contract constructor parameters
+     * @returns Contract address
+     */
+    async deployContract(
+        contractType: 'LEGAL_AGREEMENT' | 'PAYMENT_ESCROW',
+        walletAddress: string,
+        params: any[]
+    ): Promise<string> {
+        try {
+            // Get the wallet
+            const wallet = this.wallets.get(walletAddress);
+            
+            if (!wallet) {
+                throw new Error(`Wallet not found: ${walletAddress}`);
+            }
+            
+            // Get the contract factory based on type
+            let contractFactory: ethers.ContractFactory;
+            
+            switch (contractType) {
+                case 'LEGAL_AGREEMENT':
+                    // In a real implementation, this would use the actual contract bytecode
+                    // For this example, we'll simulate the deployment
+                    this.logger.info('Simulating Legal Agreement contract deployment');
+                    
+                    // Generate a mock contract address
+                    const legalContractAddress = `0x${Array(40).fill(0).map(() => 
+                        Math.floor(Math.random() * 16).toString(16)
+                    ).join('')}`;
+                    
+                    // Create a contract instance
+                    const legalContract = new ethers.Contract(
+                        legalContractAddress,
+                        this.LEGAL_AGREEMENT_ABI,
+                        wallet
+                    );
+                    
+                    // Store the contract
+                    this.contracts.set(legalContractAddress, legalContract);
+                    
+                    // Publish contract deployed event
+                    this.eventBus.publish('contract.deployed', {
+                        contractType,
+                        contractAddress: legalContractAddress,
+                        deployer: walletAddress
+                    });
+                    
+                    return legalContractAddress;
+                    
+                case 'PAYMENT_ESCROW':
+                    // In a real implementation, this would use the actual contract bytecode
+                    // For this example, we'll simulate the deployment
+                    this.logger.info('Simulating Payment Escrow contract deployment');
+                    
+                    // Generate a mock contract address
+                    const escrowContractAddress = `0x${Array(40).fill(0).map(() => 
+                        Math.floor(Math.random() * 16).toString(16)
+                    ).join('')}`;
+                    
+                    // Create a contract instance
+                    const escrowContract = new ethers.Contract(
+                        escrowContractAddress,
+                        this.PAYMENT_ESCROW_ABI,
+                        wallet
+                    );
+                    
+                    // Store the contract
+                    this.contracts.set(escrowContractAddress, escrowContract);
+                    
+                    // Publish contract deployed event
+                    this.eventBus.publish('contract.deployed', {
+                        contractType,
+                        contractAddress: escrowContractAddress,
+                        deployer: walletAddress
+                    });
+                    
+                    return escrowContractAddress;
+                    
+                default:
+                    throw new Error(`Unsupported contract type: ${contractType}`);
+            }
+        } catch (error) {
+            this.logger.error('Failed to deploy contract', error);
+            throw new Error(`Contract deployment failed: ${(error as Error).message}`);
+        }
+    }
+    
+    /**
+     * Call a contract method
+     * @param contractAddress Contract address
+     * @param walletAddress Wallet address to use for the transaction
+     * @param methodName Method name to call
+     * @param params Method parameters
+     * @param value ETH value to send with the transaction
+     * @returns Transaction result
+     */
+    async callContractMethod(
+        contractAddress: string,
+        walletAddress: string,
+        methodName: string,
+        params: any[],
+        value: string = '0'
+    ): Promise<any> {
+        try {
+            // Get the contract
+            const contract = this.contracts.get(contractAddress);
+            
+            if (!contract) {
+                throw new Error(`Contract not found: ${contractAddress}`);
+            }
+            
+            // Get the wallet
+            const wallet = this.wallets.get(walletAddress);
+            
+            if (!wallet) {
+                throw new Error(`Wallet not found: ${walletAddress}`);
+            }
+            
+            // Connect the contract to the wallet
+            const connectedContract = contract.connect(wallet);
+            
+            // In a real implementation, this would actually call the contract method
+            // For this example, we'll simulate the call based on the method name
+            
+            this.logger.info(`Simulating contract method call: ${methodName}`);
+            
+            // Simulate different method results based on the method name
+            switch (methodName) {
+                case 'createAgreement':
+                    // Simulate creating a legal agreement
+                    const agreementId = Math.floor(Math.random() * 1000000);
+                    
+                    // Publish agreement created event
+                    this.eventBus.publish('agreement.created', {
+                        agreementId,
+                        documentHash: params[0],
+                        creator: walletAddress,
+                        parties: params[2]
+                    });
+                    
+                    return agreementId;
+                    
+                case 'signAgreement':
+                    // Simulate signing a legal agreement
+                    const signedAgreementId = params[0];
+                    
+                    // Publish agreement signed event
+                    this.eventBus.publish('agreement.signed', {
+                        agreementId: signedAgreementId,
+                        signer: walletAddress
+                    });
+                    
+                    return true;
+                    
+                case 'isAgreementValid':
+                    // Simulate checking if an agreement is valid
+                    return true;
+                    
+                case 'getAgreementDetails':
+                    // Simulate getting agreement details
+                    return [
+                        `0x${Array(64).fill(0).map(() => 
+                            Math.floor(Math.random() * 16).toString(16)
+                        ).join('')}`, // document hash
+                        Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60, // valid until (30 days from now)
+                        ['0x1234...', '0x5678...'], // parties
+                        [true, false] // signatures
+                    ];
+                    
+                case 'createEscrow':
+                    // Simulate creating an escrow
+                    const escrowId = Math.floor(Math.random() * 1000000);
+                    
+                    // Publish escrow created event
+                    this.eventBus.publish('escrow.created', {
+                        escrowId,
+                        payer: walletAddress,
+                        payee: params[0],
+                        amount: params[1]
+                    });
+                    
+                    return escrowId;
+                    
+                case 'releasePayment':
+                    // Simulate releasing an escrow payment
+                    const releasedEscrowId = params[0];
+                    
+                    // Publish payment released event
+                    this.eventBus.publish('payment.released', {
+                        escrowId: releasedEscrowId,
+                        releaser: walletAddress
+                    });
+                    
+                    return true;
+                    
+                default:
+                    // For unknown methods, return a generic successful result
+                    return {
+                        success: true,
+                        value: params
+                    };
+            }
+        } catch (error) {
+            this.logger.error('Failed to call contract method', error);
+            throw new Error(`Contract method call failed: ${(error as Error).message}`);
+        }
+    }
+    
+    /**
+     * Get a contract instance
+     * @param contractAddress Contract address
+     * @returns Contract instance
+     */
+    getContract(contractAddress: string): ethers.Contract | undefined {
+        return this.contracts.get(contractAddress);
+    }
+    
+    /**
+     * Calculate the hash of a document
+     * @param document Document content
+     * @returns Document hash
+     */
+    calculateDocumentHash(document: string): string {
+        // Use ethers.js utils to hash the document
+        return ethers.utils.keccak256(ethers.utils.toUtf8Bytes(document));
+    }
+    
+    /**
+     * Create a legal agreement on the blockchain
+     * @param documentHash Hash of the legal document
+     * @param validUntil Timestamp until which the agreement is valid
+     * @param parties Addresses of parties involved in the agreement
+     * @param walletAddress Wallet address to use for the transaction
+     * @returns Agreement ID
+     */
+    async createLegalAgreement(
+        documentHash: string,
+        validUntil: number,
+        parties: string[],
+        walletAddress: string
+    ): Promise<number> {
+        try {
+            // Find a legal agreement contract
+            const contractAddress = Array.from(this.contracts.keys()).find(address => {
+                const contract = this.contracts.get(address);
+                
+                if (!contract) {
+                    return false;
+                }
+                
+                // Check if the contract has the createAgreement function
+                return contract.interface.fragments.some(fragment => 
+                    fragment.type === 'function' && fragment.name === 'createAgreement'
+                );
+            });
+            
+            if (!contractAddress) {
+                throw new Error('No legal agreement contract found');
+            }
+            
+            // Call the createAgreement method
+            return await this.callContractMethod(
+                contractAddress,
+                walletAddress,
+                'createAgreement',
+                [documentHash, validUntil, parties]
+            );
+        } catch (error) {
+            this.logger.error('Failed to create legal agreement', error);
+            throw new Error(`Legal agreement creation failed: ${(error as Error).message}`);
+        }
+    }
+    
+    /**
+     * Create an escrow payment on the blockchain
+     * @param payeeAddress Address to receive the payment
+     * @param amount Amount to pay
+     * @param terms Terms of the escrow
+     * @param walletAddress Wallet address to use for the transaction
+     * @returns Escrow ID
+     */
+    async createEscrowPayment(
+        payeeAddress: string,
+        amount: string,
+        terms: string,
+        walletAddress: string
+    ): Promise<number> {
+        try {
+            // Find a payment escrow contract
+            const contractAddress = Array.from(this.contracts.keys()).find(address => {
+                const contract = this.contracts.get(address);
+                
+                if (!contract) {
+                    return false;
+                }
+                
+                // Check if the contract has the createEscrow function
+                return contract.interface.fragments.some(fragment => 
+                    fragment.type === 'function' && fragment.name === 'createEscrow'
+                );
+            });
+            
+            if (!contractAddress) {
+                throw new Error('No payment escrow contract found');
+            }
+            
+            // Convert amount to wei
+            const amountWei = ethers.utils.parseEther(amount);
+            
+            // Call the createEscrow method
+            return await this.callContractMethod(
+                contractAddress,
+                walletAddress,
+                'createEscrow',
+                [payeeAddress, amountWei, terms],
+                amount
+            );
+        } catch (error) {
+            this.logger.error('Failed to create escrow payment', error);
+            throw new Error(`Escrow payment creation failed: ${(error as Error).message}`);
+        }
+    }
+    
+    /**
+     * Dispose the smart contract manager
+     */
+    dispose(): void {
+        this.eventBus.unsubscribe('contract.deploy', this.deployContract);
+        this.eventBus.unsubscribe('contract.call', this.callContractMethod);
+        this.eventBus.unsubscribe('wallet.create', this.createWallet);
+        
+        // Clear contracts and wallets
+        this.contracts.clear();
+        this.wallets.clear();
+        
+        this.provider = null;
+    }
+}

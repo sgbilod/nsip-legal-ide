@@ -1,0 +1,77 @@
+{
+    // TypeScript Configuration
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "typescript.suggest.completeFunctionCalls": true,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    
+    // Editor Configuration
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true,
+        "source.organizeImports": true
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": true,
+    "editor.suggestSelection": "first",
+    "editor.tabSize": 2,
+    "editor.wordWrap": "on",
+    
+    // File Configuration
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    "files.exclude": {
+        "**/.git": true,
+        "**/node_modules": true,
+        "**/dist": true,
+        "**/*.js.map": true
+    },
+    "files.watcherExclude": {
+        "**/node_modules/**": true,
+        "**/dist/**": true
+    },
+    
+    // Search Configuration
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/dist": true,
+        "**/*.js.map": true
+    },
+    
+    // Terminal Configuration
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell"
+        }
+    },
+    
+    // Git Configuration
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    
+    // Todo Tree Configuration
+    "todo-tree.general.tags": [
+        "TODO",
+        "FIXME",
+        "SECURITY",
+        "PERFORMANCE",
+        "LEGAL",
+        "COMPLIANCE"
+    ],
+    "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*($TAGS)",
+    
+    // Legal IDE Specific
+    "workbench.colorCustomizations": {
+        "editorError.foreground": "#ff0000",
+        "editorWarning.foreground": "#ffa500",
+        "editorInfo.foreground": "#00ff00"
+    },
+    
+    // Security Settings
+    "security.workspace.trust.enabled": true,
+    "security.workspace.trust.untrustedFiles": "prompt"
+}

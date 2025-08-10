@@ -1,0 +1,104 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Legal Markdown",
+  "patterns": [
+    {
+      "include": "#legal-sections"
+    },
+    {
+      "include": "#legal-definitions"
+    },
+    {
+      "include": "#legal-references"
+    },
+    {
+      "include": "#legal-signatures"
+    },
+    {
+      "include": "#template-variables"
+    },
+    {
+      "include": "text.html.markdown"
+    }
+  ],
+  "repository": {
+    "legal-sections": {
+      "patterns": [
+        {
+          "name": "markup.heading.section.legal-markdown",
+          "match": "^(?:(?:\\d+\\.)|(?:Section\\s+\\d+\\.)|(?:Article\\s+\\d+\\.))\\s+(.+)$",
+          "captures": {
+            "1": {
+              "name": "entity.name.section.legal-markdown"
+            }
+          }
+        },
+        {
+          "name": "markup.heading.clause.legal-markdown",
+          "match": "^\\s*(?:(?:[a-z\\d]+[\\)\\.])\\s+|(?:\\([a-z\\d]+\\)\\s+))(.+)$",
+          "captures": {
+            "1": {
+              "name": "entity.name.clause.legal-markdown"
+            }
+          }
+        }
+      ]
+    },
+    "legal-definitions": {
+      "patterns": [
+        {
+          "name": "markup.bold.definition.legal-markdown",
+          "match": "[\"]([^\"]+)[\"](?:\\s+shall)?(?:\\s+(?:mean|refer to|be defined as))",
+          "captures": {
+            "1": {
+              "name": "entity.name.type.definition.legal-markdown"
+            }
+          }
+        },
+        {
+          "name": "variable.other.definition.legal-markdown",
+          "match": "[\"]([^\"]+)[\"]"
+        }
+      ]
+    },
+    "legal-references": {
+      "patterns": [
+        {
+          "name": "markup.underline.reference.legal-markdown",
+          "match": "\\b(?:Section|Article|Clause|Paragraph)\\s+(\\d+(?:\\.\\d+)?)\\b",
+          "captures": {
+            "1": {
+              "name": "constant.numeric.reference.legal-markdown"
+            }
+          }
+        }
+      ]
+    },
+    "legal-signatures": {
+      "patterns": [
+        {
+          "name": "keyword.other.signature.legal-markdown",
+          "match": "^By:\\s*_+$"
+        },
+        {
+          "name": "keyword.other.signature-metadata.legal-markdown",
+          "match": "^(?:Name|Title|Date):\\s*_+$"
+        }
+      ]
+    },
+    "template-variables": {
+      "patterns": [
+        {
+          "name": "variable.other.template.legal-markdown",
+          "match": "\\{\\{([^\\}]+)\\}\\}",
+          "captures": {
+            "1": {
+              "name": "entity.name.tag.template-variable.legal-markdown"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "scopeName": "text.markdown.legal"
+}

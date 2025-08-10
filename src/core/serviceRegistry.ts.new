@@ -1,0 +1,126 @@
+/**
+ * Service Registry for dependency management
+ */
+
+import { IService, IEventEmitter, ILogger } from './interfaces';
+
+/**
+ * Service registry for managing service lifecycle and dependencies
+ */
+export class ServiceRegistry {
+    private services: Map<string, any> = new Map();
+    private eventBus: IEventEmitter;
+    private logger: ILogger;
+    
+    /**
+     * Create a new service registry
+     * 
+     * @param eventBus Event bus for service communication
+     * @param logger Logger for service operations
+     */
+    constructor(eventBus: IEventEmitter, logger: ILogger) {
+        this.eventBus = eventBus;
+        this.logger = logger;
+    }
+    
+    /**
+     * Register a service
+     * 
+     * @param identifier Service identifier
+     * @param service Service instance
+     */
+    register(identifier: string, service: any): void {
+        this.services.set(identifier, service);
+        this.logger.debug(`Service registered: ${identifier}`);
+    }
+    
+    /**
+     * Get a service by identifier
+     * 
+     * @param identifier Service identifier
+     * @returns Service instance or null if not found
+     */
+    get(identifier: string): any {
+        return this.services.get(identifier) || null;
+    }
+    
+    /**
+     * Unregister a service
+     * 
+     * @param identifier Service identifier
+     * @returns True if service was unregistered, false if not found
+     */
+    unregister(identifier: string): boolean {
+        const result = this.services.delete(identifier);
+        if (result) {
+            this.logger.debug(`Service unregistered: ${identifier}`);
+        }
+        return result;
+    }
+    
+    /**
+     * Check if a service is registered
+     * 
+     * @param identifier Service identifier
+     * @returns True if service is registered
+     */
+    has(identifier: string): boolean {
+        return this.services.has(identifier);
+    }
+    
+    /**
+     * Get all registered service identifiers
+     * 
+     * @returns Array of service identifiers
+     */
+    getIdentifiers(): string[] {
+        return Array.from(this.services.keys());
+    }
+    
+    /**
+     * Initialize all registered services
+     */
+    async initializeAll(): Promise<void> {
+        this.logger.info('Initializing all services');
+        
+        for (const [id, service] of this.services.entries()) {
+            if (typeof service.initialize === 'function') {
+                try {
+                    this.logger.debug(`Initializing service: ${id}`);
+                    await service.initialize();
+                    this.logger.debug(`Service initialized: ${id}`);
+                } catch (error) {
+                    this.logger.error(`Failed to initialize service: ${id}`, error);
+                    throw error;
+                }
+            }
+        }
+        
+        this.logger.info('All services initialized');
+    }
+    
+    /**
+     * Dispose all registered services
+     */
+    async disposeAll(): Promise<void> {
+        this.logger.info('Disposing all services');
+        
+        // Dispose services in reverse order of registration
+        const serviceEntries = Array.from(this.services.entries());
+        
+        for (let i = serviceEntries.length - 1; i >= 0; i--) {
+            const [id, service] = serviceEntries[i];
+            if (typeof service.dispose === 'function') {
+                try {
+                    this.logger.debug(`Disposing service: ${id}`);
+                    await service.dispose();
+                    this.logger.debug(`Service disposed: ${id}`);
+                } catch (error) {
+                    this.logger.error(`Failed to dispose service: ${id}`, error);
+                }
+            }
+        }
+        
+        this.logger.info('All services disposed');
+    }
+}

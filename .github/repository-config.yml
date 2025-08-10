@@ -1,0 +1,26 @@
+# Repository Configuration
+name: nsip-legal-ide
+displayName: NSIP Legal/Business IDE
+type: vscode-extension
+
+# Feature Configuration
+features:
+  copilot:
+    enabled: true
+    codingAgent: true
+    codeReview: true
+    suggestions: true
+    autoImplement: true
+    
+  actions:
+    enabled: true
+    allowAll: true
+    createPRs: true
+    
+  security:
+    enableAll: true
+    
+  collaboration:
+    requirePRs: true
+    allowAutoMerge: true
+    allowForcePush: true

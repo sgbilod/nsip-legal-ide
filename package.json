@@ -1,0 +1,373 @@
+{
+  "name": "nsip-legal-ide",
+  "displayName": "NSIP Legal/Business IDE",
+  "description": "Advanced VS Code extension for legal document creation, analysis, and compliance",
+  "version": "0.1.0",
+  "private": false,
+  "author": {
+    "name": "Stephen Bilodeau",
+    "email": "stephen.bilodeau@example.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sgbilod/nsip-legal-id.git"
+  },
+  "dependencies": {
+    "ethers": "^5.7.2",
+    "web3": "^1.10.0",
+    "@openzeppelin/contracts": "^4.9.3",
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.5",
+    "@types/mocha": "^10.0.1",
+    "hardhat": "^2.17.1",
+    "ts-node": "^10.9.1",
+    "@nomiclabs/hardhat-ethers": "^2.2.3"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Programming Languages",
+    "Formatters"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "nsip.createDocument",
+        "title": "NSIP: Create Legal Document"
+      },
+      {
+        "command": "nsip.analyzeDocument",
+        "title": "NSIP: Analyze Current Document"
+      },
+      {
+        "command": "nsip.validateCompliance",
+        "title": "NSIP: Validate Compliance"
+      },
+      {
+        "command": "nsip.trackIPAsset",
+        "title": "NSIP: Track IP Asset"
+      },
+      {
+        "command": "nsip.customizeTemplate",
+        "title": "NSIP: Customize Template"
+      },
+      {
+        "command": "nsip.showDashboard",
+        "title": "NSIP: Show Dashboard"
+      },
+      {
+        "command": "nsipLegal.createContract",
+        "title": "NSIP: Create Smart Contract",
+        "icon": "$(add)"
+      },
+      {
+        "command": "nsipLegal.compileContract",
+        "title": "NSIP: Compile Smart Contract",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "nsipLegal.deployContract",
+        "title": "NSIP: Deploy Smart Contract",
+        "icon": "$(cloud-upload)"
+      },
+      {
+        "command": "nsipLegal.executeContract",
+        "title": "NSIP: Execute Smart Contract Method",
+        "icon": "$(play)"
+      },
+      {
+        "command": "nsipLegal.viewContract",
+        "title": "NSIP: View Smart Contract",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "nsip.refreshDocumentExplorer",
+        "title": "NSIP: Refresh Document Explorer",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "nsip.refreshComplianceView",
+        "title": "NSIP: Refresh Compliance View",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "nsip.clearComplianceIssues",
+        "title": "NSIP: Clear Compliance Issues",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "nsip.analyzeClaims",
+        "title": "NSIP: Analyze Patent Claims",
+        "icon": "$(microscope)"
+      },
+      {
+        "command": "nsip.addChain",
+        "title": "NSIP: Add Blockchain Network",
+        "icon": "$(add)"
+      },
+      {
+        "command": "nsip.switchChain",
+        "title": "NSIP: Switch Network",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "nsip.startCollaboration",
+        "title": "NSIP: Start Collaboration Session",
+        "icon": "$(person-add)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "nsip-explorer",
+          "title": "NSIP Legal IDE",
+          "icon": "resources/icons/nsip.svg"
+        }
+      ]
+    },
+    "views": {
+      "nsip-explorer": [
+        {
+          "id": "nsipTemplateExplorer",
+          "name": "Templates",
+          "icon": "$(file-text)"
+        },
+        {
+          "id": "nsipComplianceView",
+          "name": "Compliance",
+          "icon": "$(verified)"
+        },
+        {
+          "id": "nsipDocumentExplorer",
+          "name": "Documents",
+          "icon": "$(files)"
+        },
+        {
+          "id": "nsipIPAssetExplorer",
+          "name": "IP Assets",
+          "icon": "$(law)"
+        },
+        {
+          "id": "nsipLegalContracts",
+          "name": "Smart Contracts",
+          "icon": "$(terminal-powershell)"
+        }
+      ]
+    },
+    "languages": [
+      {
+        "id": "nsip-legal",
+        "aliases": [
+          "NSIP Legal",
+          "nsip-legal"
+        ],
+        "extensions": [
+          ".nsip",
+          ".nsip-legal"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "nsip-legal",
+        "scopeName": "text.nsip-legal",
+        "path": "./syntaxes/nsip-legal.tmLanguage.json"
+      }
+    ],
+    "configuration": {
+      "title": "NSIP Legal IDE",
+      "properties": {
+        "nsip.ai.provider": {
+          "type": "string",
+          "default": "openai",
+          "enum": [
+            "openai",
+            "anthropic",
+            "local"
+          ],
+          "description": "AI provider for document intelligence"
+        },
+        "nsip.templates.repository": {
+          "type": "string",
+          "default": "./templates",
+          "description": "Path to template repository"
+        },
+        "nsip.security.encryption": {
+          "type": "string",
+          "default": "AES-256-GCM",
+          "description": "Encryption standard for sensitive documents"
+        },
+        "nsip.compliance.rules": {
+          "type": "string",
+          "default": "./compliance",
+          "description": "Path to compliance rules directory"
+        }
+      }
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "nsip.refreshDocumentExplorer",
+          "when": "view == nsipDocumentExplorer",
+          "group": "navigation"
+        },
+        {
+          "command": "nsip.refreshComplianceView",
+          "when": "view == nsipComplianceView",
+          "group": "navigation"
+        },
+        {
+          "command": "nsip.clearComplianceIssues",
+          "when": "view == nsipComplianceView",
+          "group": "navigation"
+        },
+        {
+          "command": "nsipLegal.createContract",
+          "when": "view == nsipLegalContracts",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "nsip.validateCompliance",
+          "when": "editorLangId == markdown || editorLangId == nsip-legal",
+          "group": "nsip"
+        },
+        {
+          "command": "nsip.analyzeDocument",
+          "when": "editorLangId == markdown || editorLangId == nsip-legal",
+          "group": "nsip"
+        },
+        {
+          "command": "nsipLegal.compileContract",
+          "when": "editorLangId == solidity",
+          "group": "nsipLegal"
+        },
+        {
+          "command": "nsipLegal.deployContract",
+          "when": "editorLangId == solidity",
+          "group": "nsipLegal"
+        },
+        {
+          "command": "nsipLegal.executeContract",
+          "when": "editorLangId == solidity",
+          "group": "nsipLegal"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "nsip.showDashboard",
+          "when": "editorLangId == markdown || editorLangId == nsip-legal"
+        },
+        {
+          "command": "nsipLegal.createContract",
+          "when": "editorLangId == solidity || true"
+        },
+        {
+          "command": "nsipLegal.compileContract",
+          "when": "editorLangId == solidity"
+        },
+        {
+          "command": "nsipLegal.deployContract",
+          "when": "editorLangId == solidity"
+        },
+        {
+          "command": "nsipLegal.executeContract",
+          "when": "editorLangId == solidity"
+        },
+        {
+          "command": "nsipLegal.viewContract",
+          "when": "editorLangId == solidity || true"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "lint:fix": "eslint src --ext ts --fix",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:unit": "jest --testMatch='**/*.unit.test.ts'",
+    "test:integration": "jest --testMatch='**/*.integration.test.ts'",
+    "test:e2e": "jest --testMatch='**/*.e2e.test.ts'",
+    "build": "webpack --mode production",
+    "build:dev": "webpack --mode development",
+    "package": "vsce package",
+    "publish": "vsce publish",
+    "clean": "rimraf dist coverage *.vsix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,md}\"",
+    "type-check": "tsc --noEmit",
+    "security-check": "npm audit fix && snyk test",
+    "pre-commit": "lint-staged",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/jest": "^29.5.0",
+    "@types/lodash": "^4.14.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.10.0",
+    "@types/uuid": "^9.0.0",
+    "@types/vscode": "^1.95.0",
+    "@typescript-eslint/eslint-plugin": "^6.18.0",
+    "@typescript-eslint/parser": "^6.18.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-jest": "^27.6.0",
+    "eslint-plugin-prettier": "^5.1.0",
+    "glob": "^8.1.0",
+    "husky": "^8.0.0",
+    "jest": "^29.7.0",
+    "lint-staged": "^15.2.0",
+    "mocha": "^10.2.0",
+    "prettier": "^3.1.0",
+    "rimraf": "^5.0.0",
+    "ts-jest": "^29.1.0",
+    "ts-loader": "^9.5.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.6.0",
+    "vsce": "^2.15.0",
+    "@vscode/test-electron": "^2.3.8",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.1"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.17.0",
+    "@azure/openai": "^1.0.0",
+    "@ethereum/contracts": "^5.7.0",
+    "@langchain/core": "^0.1.0",
+    "@openai/api": "^4.24.0",
+    "@solidity-parser/parser": "^0.16.0",
+    "ajv": "^8.12.0",
+    "axios": "^1.6.0",
+    "crypto-js": "^4.1.1",
+    "ethers": "^6.9.0",
+    "handlebars": "^4.7.8",
+    "lodash": "^4.17.21",
+    "uuid": "^9.0.0",
+    "vscode-languageclient": "^8.1.0",
+    "winston": "^3.11.0",
+    "zod": "^3.22.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write",
+      "jest --bail --findRelatedTests"
+    ],
+    "*.{js,jsx,json,md}": ["prettier --write"]
+  }
+}
